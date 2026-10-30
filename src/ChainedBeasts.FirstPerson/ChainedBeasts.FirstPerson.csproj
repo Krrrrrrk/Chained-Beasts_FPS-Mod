@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <!-- Generated game bindings expose incompatible nullable attributes. Use the loader's convention. -->
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>ChainedBeasts.FirstPerson</AssemblyName>
+    <Version>0.1.1</Version>
+    <Deterministic>true</Deterministic>
+    <GameDir Condition="'$(GameDir)' == '' and '$(CHAINED_BEASTS_GAME_DIR)' != ''">$(CHAINED_BEASTS_GAME_DIR)</GameDir>
+    <GameDir Condition="'$(GameDir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Chained Beasts</GameDir>
+    <LoaderDir>$(GameDir)\BepInEx</LoaderDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="$(LoaderDir)\core\BepInEx.Core.dll" Private="false" />
+    <Reference Include="$(LoaderDir)\core\BepInEx.Unity.IL2CPP.dll" Private="false" />
+    <Reference Include="$(LoaderDir)\core\0Harmony.dll" Private="false" />
+    <Reference Include="$(LoaderDir)\core\Il2CppInterop.Runtime.dll" Private="false" />
+    <Reference Include="$(LoaderDir)\core\Il2CppInterop.Common.dll" Private="false" />
+    <Reference Include="$(LoaderDir)\interop\Assembly-CSharp.dll" Private="false" />
+    <Reference Include="$(LoaderDir)\interop\Il2Cppmscorlib.dll" Private="false" />
+    <Reference Include="$(LoaderDir)\interop\Cinemachine.dll" Private="false" />
+    <Reference Include="$(LoaderDir)\interop\UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="$(LoaderDir)\interop\UnityEngine.IMGUIModule.dll" Private="false" />
+    <Reference Include="$(LoaderDir)\interop\Unity.InputSystem.dll" Private="false" />
+    <Reference Include="$(LoaderDir)\interop\Unity.Netcode.Runtime.dll" Private="false" />
+  </ItemGroup>
+</Project>

@@ -122,7 +122,7 @@ Build the Release DLL and run the native audit first, then:
 python scripts/package.py
 ```
 
-The current output is `artifacts/ChainedBeasts-FirstPerson-0.1.1-experimental.zip`. The script includes an explicit list of files: this mod's DLL, README, configuration/developer guides, changelog, MIT license, and package manifest. It then reopens the archive and checks its entries and payload bytes.
+The current output is `artifacts/ChainedBeasts-FirstPerson-0.1.1-experimental.zip`. The script includes an explicit list of files: this mod's DLL, README, configuration/developer guides, screenshots, changelog, MIT license, and package manifest. It then reopens the archive and checks its entries and payload bytes.
 
 It doesn't package game or loader binaries, install the DLL, create a release, or upload anything. Keep `Plugin.Version`, the project version, and `scripts/package.py`'s version together when making a new build.
 

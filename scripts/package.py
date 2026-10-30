@@ -26,7 +26,8 @@ def main():
         "README.md": readme,
         "manifest.json": (json.dumps(manifest, indent=2) + "\n").encode(),
     }
-    for name in ("docs/CONFIGURATION.md", "docs/DEVELOPMENT.md", "CHANGELOG.md", "LICENSE"):
+    for name in ("docs/CONFIGURATION.md", "docs/DEVELOPMENT.md", "CHANGELOG.md", "LICENSE",
+                 "docs/screenshots/first-person-enemies.png", "docs/screenshots/first-person-duel.png"):
         entries[name] = (ROOT / name).read_bytes()
     output = ROOT / f"artifacts/ChainedBeasts-FirstPerson-{VERSION}-experimental.zip"
     with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as archive:

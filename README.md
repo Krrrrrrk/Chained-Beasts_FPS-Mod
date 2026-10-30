@@ -37,6 +37,16 @@ Menus, pause, death, executions, boss cinematics, round results, scene changes, 
 
 F9 can turn first person off while it's waiting to resume too.
 
+## Screenshots
+
+**Personal space is apparently optional.**
+
+![First-person combat in a sandy arena, with the chain in the foreground and several enemies ahead.](docs/screenshots/first-person-enemies.png)
+
+**A perfectly reasonable way to play this game.**
+
+![First-person view of a sword-wielding enemy approaching between stone pillars in the arena.](docs/screenshots/first-person-duel.png)
+
 ## Installation
 
 This build is for **Chained Beasts 1.0.2**, Steam build **26231777**, on 64-bit Windows.

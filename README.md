@@ -6,7 +6,7 @@ FPS Mod adds a first-person camera to **Chained Beasts**. Press **F9** to switch
 
 **This is a shitpost.** Mouse and keyboard only. It's janky, and I don't plan to fix any issues.
 
-**Current version:** 0.1.1 � **Supported Steam build:** 26231777
+**Current version:** 0.1.1 · **Supported Steam build:** 26231777
 
 **[Download FPS Mod v0.1.1](https://github.com/Krrrrrrk/Chained-Beasts_FPS-Mod/releases/tag/v0.1.1)**
 

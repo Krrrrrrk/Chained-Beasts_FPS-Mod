@@ -6,7 +6,7 @@ FPS Mod adds a first-person camera to **Chained Beasts**. Press **F9** to switch
 
 **This is a shitpost.** Mouse and keyboard only. It's janky, and I don't plan to fix any issues.
 
-**Current version:** 0.1.1 · **Supported Steam build:** 26231777
+**Current version:** 0.1.1 Â· **Supported Steam build:** 26231777
 
 **[Download FPS Mod v0.1.1](https://github.com/Krrrrrrk/Chained-Beasts_FPS-Mod/releases/tag/v0.1.1)**
 
@@ -36,6 +36,16 @@ When you pick something up or get knocked over, you can keep looking around. You
 Menus, pause, death, executions, boss cinematics, round results, scene changes, and tabbing out return you to the normal camera. First person resumes when you're back in arena play, with the view level and facing the way your character is facing.
 
 F9 can turn first person off while it's waiting to resume too.
+
+## Eye Level potion with TC
+
+I also added **Eye Level** to [Terms & Contusions](https://github.com/Krrrrrrk/chained-beasts-mod-foundation). It puts you in first person for the next battle. TC has its own potion camera support, so FPS Mod is optional.
+
+If you install TC too, choose a mode in **TC Content** and Save before a run: **F9 SWITCHING** enables manual switching and locks Eye Level offers off; **POTION ONLY** disables F9 and locks the potion on in the offer pool. The potion card can't be toggled separately. TC includes both modes even without this standalone mod. In multiplayer, the host's mode temporarily controls the party. FPS Mod on its own keeps its normal F9 behavior.
+
+[![Watch Eye Level gameplay](docs/screenshots/eye-level-video.jpg)](https://github.com/Krrrrrrk/chained-beasts-mod-foundation/releases/download/v1.1.0/Eye_Level.mp4)
+
+[Watch the Eye Level gameplay video (MP4)](https://github.com/Krrrrrrk/chained-beasts-mod-foundation/releases/download/v1.1.0/Eye_Level.mp4)
 
 ## Screenshots
 

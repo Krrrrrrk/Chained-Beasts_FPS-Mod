@@ -7,10 +7,13 @@ import os
 import re
 import struct
 import subprocess
+import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = Path(os.environ.get("CHAINED_BEASTS_GAME_DIR", r"C:\Program Files (x86)\Steam\steamapps\common\Chained Beasts"))
-ILSPY = ROOT.parent / "tools/ilspy/ilspycmd.exe"
+ILSPY = os.environ.get("ILSPY_PATH") or shutil.which("ilspycmd")
+if not ILSPY:
+    raise SystemExit("Install ilspycmd or set ILSPY_PATH to its executable before running this audit.")
 EXPECTED_HASH = "ba3ef02fa87da4c41bb27d7610539c9578132204f0fb5713833e2ef93415ce29"
 TARGETS = {"Player": ["GetModifiedPlayerInput", "GetMouseGroundPos"],
            "NetworkAgent": ["UpdateModelFacing"]}

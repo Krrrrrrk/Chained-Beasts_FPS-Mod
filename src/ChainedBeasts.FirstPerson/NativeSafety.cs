@@ -1,3 +1,9 @@
+#if TC_EMBEDDED_CAMERA
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.IO;
+#endif
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -7,7 +13,11 @@ using HarmonyLib;
 using Il2CppInterop.Common;
 using UnityEngine;
 
+#if TC_EMBEDDED_CAMERA
+namespace TermsAndContusions.FirstPerson;
+#else
 namespace ChainedBeasts.FirstPerson;
+#endif
 
 internal static class NativeSafety
 {

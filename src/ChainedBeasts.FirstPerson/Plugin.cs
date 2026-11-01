@@ -10,14 +10,13 @@ public sealed class Plugin : BasePlugin
 {
     public const string Id = "local.chainedbeasts.firstperson";
     public const string Name = "Chained Beasts First Person";
-    public const string Version = "0.1.1";
+    public const string Version = "0.2.0";
     private Harmony _harmony;
     private FirstPersonController _controller;
 
     public override void Load()
     {
         var settings = new Settings(Config);
-        if (!settings.Enabled) { Log.LogInfo("First Person disabled in config."); return; }
         try
         {
             NativeSafety.VerifyFingerprint();
@@ -25,7 +24,7 @@ public sealed class Plugin : BasePlugin
             NativeSafety.Install(_harmony);
             _controller = AddComponent<FirstPersonController>();
             _controller.Initialize(settings, Log);
-            Log.LogInfo($"First Person {Version}; {settings.ToggleKey} toggles first/third person during arena play. Experimental; gameplay verification pending.");
+            Log.LogInfo($"First Person {Version}; manual toggle enabled={settings.Enabled}; temporary content locks supported. Gameplay verification pending.");
         }
         catch (Exception error)
         {

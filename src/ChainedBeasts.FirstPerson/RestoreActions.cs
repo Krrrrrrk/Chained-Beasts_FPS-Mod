@@ -1,4 +1,14 @@
+#if TC_EMBEDDED_CAMERA
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.IO;
+#endif
+#if TC_EMBEDDED_CAMERA
+namespace TermsAndContusions.FirstPerson;
+#else
 namespace ChainedBeasts.FirstPerson;
+#endif
 
 // Register BEFORE each mutation. Cleanup runs in reverse order even if an object was destroyed.
 internal sealed class RestoreActions : IDisposable

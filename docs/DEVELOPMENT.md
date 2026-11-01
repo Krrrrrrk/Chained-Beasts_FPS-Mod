@@ -122,7 +122,7 @@ Build the Release DLL and run the native audit first, then:
 python scripts/package.py
 ```
 
-The current output is `artifacts/ChainedBeasts-FirstPerson-0.1.1-experimental.zip`. The script includes an explicit list of files: this mod's DLL, README, configuration/developer guides, screenshots, changelog, MIT license, and package manifest. It then reopens the archive and checks its entries and payload bytes.
+The current output is `artifacts/ChainedBeasts-FirstPerson-0.2.0-experimental.zip`. The script includes an explicit list of files: this mod's DLL, README, configuration/developer guides, screenshots, changelog, MIT license, and package manifest. It then reopens the archive and checks its entries and payload bytes.
 
 It doesn't package game or loader binaries, install the DLL, create a release, or upload anything. Keep `Plugin.Version`, the project version, and `scripts/package.py`'s version together when making a new build.
 
@@ -131,3 +131,7 @@ It doesn't package game or loader binaries, install the DLL, create a release, o
 The mod uses the [MIT license](../LICENSE). The existing game camera and animations belong to Chained Beasts. Runtime dependencies are supplied by the installed [BepInEx](https://github.com/BepInEx/BepInEx) setup, including [Il2CppInterop](https://github.com/BepInEx/Il2CppInterop) and [Harmony](https://github.com/pardeike/Harmony). The native audit uses [ILSpy](https://github.com/icsharpcode/ILSpy).
 
 [Back to the README](../README.md)
+
+## TC camera coexistence in 0.2.0
+
+`ForcedViewServices` exposes bounded, player-specific camera requests and mode control. TC's embedded support yields to the standalone camera when it is installed, so only one camera owns the view. The simulated harness covers potion locks, suspending/resuming, F9 mode changes, and restoring the standalone preference. It doesn't establish live multiplayer behavior.

@@ -20,7 +20,7 @@ MouseSensitivity = 0.12
 
 | Setting | Default | What it does |
 |---|---|---|
-| `Enabled` | `true` | Load the camera mod. Set it to `false` to turn the mod off on the next launch. |
+| `Enabled` | `true` | Enable manual FPS switching when using this mod alone. TC can override the camera mode when both are installed. |
 | `StartInFirstPerson` | `false` | Enter first person automatically when arena play is ready. Otherwise, press the toggle to turn it on. |
 
 ## Controls
@@ -64,3 +64,7 @@ Numeric values outside the listed ranges are clamped when the mod loads. NaN and
 If the camera stops working after a game update, changing these settings won't bypass the game-build check. I don't plan to update it for new game versions.
 
 [Back to the README](../README.md)
+
+## When TC is installed
+
+Choose **F9 SWITCHING** or **POTION ONLY** in TC Content and save before starting or joining. F9 switching keeps Eye Level out of new offers; potion-only disables F9 and makes Eye Level eligible. TC's mode controls switching even if an older FPS config has `Enabled = false`. Your camera sensitivity, FOV and body-visibility preferences still come from this file. Clients temporarily use the host's mode, then recover their saved choice after leaving.

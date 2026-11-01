@@ -130,6 +130,7 @@ namespace ChainedBeasts.FirstPerson
 {
     internal class Settings
     {
+        public bool Enabled = true;
         public bool StartFirstPerson, InvertY = false, HideHead = true, HideBody = true, Crosshair = true, PadToggle;
         public UnityEngine.InputSystem.Key ToggleKey = UnityEngine.InputSystem.Key.F9;
         public float Fov = 85, NearClip = .04f, MouseSensitivity = .12f, StickSpeed = 150, HeightOffset = .06f, ForwardOffset = .08f;

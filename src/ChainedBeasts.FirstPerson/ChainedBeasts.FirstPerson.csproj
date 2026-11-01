@@ -6,7 +6,7 @@
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>ChainedBeasts.FirstPerson</AssemblyName>
-    <Version>0.1.1</Version>
+    <Version>0.2.0</Version>
     <Deterministic>true</Deterministic>
     <GameDir Condition="'$(GameDir)' == '' and '$(CHAINED_BEASTS_GAME_DIR)' != ''">$(CHAINED_BEASTS_GAME_DIR)</GameDir>
     <GameDir Condition="'$(GameDir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Chained Beasts</GameDir>

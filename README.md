@@ -6,9 +6,9 @@ FPS Mod adds a first-person camera to **Chained Beasts**. Press **F9** to switch
 
 **This is a shitpost.** Mouse and keyboard only. It's janky, and I don't plan to fix any issues.
 
-**Current version:** 0.1.1 Â· **Supported Steam build:** 26231777
+**Current version:** 0.2.0 · **Supported Steam build:** 26231777
 
-**[Download FPS Mod v0.1.1](https://github.com/Krrrrrrk/Chained-Beasts_FPS-Mod/releases/tag/v0.1.1)**
+**[Download FPS Mod v0.2.0](https://github.com/Krrrrrrk/Chained-Beasts_FPS-Mod/releases/tag/v0.2.0)**
 
 ## What does it do?
 
@@ -39,6 +39,8 @@ F9 can turn first person off while it's waiting to resume too.
 
 ## Eye Level potion with TC
 
+0.2.0 adds the shared camera-mode support used by TC 1.1.0 and newer. Standalone FPS behavior stays the same when TC isn't installed.
+
 I also added **Eye Level** to [Terms & Contusions](https://github.com/Krrrrrrk/chained-beasts-mod-foundation). It puts you in first person for the next battle. TC has its own potion camera support, so FPS Mod is optional.
 
 If you install TC too, choose a mode in **TC Content** and Save before a run: **F9 SWITCHING** enables manual switching and locks Eye Level offers off; **POTION ONLY** disables F9 and locks the potion on in the offer pool. The potion card can't be toggled separately. TC includes both modes even without this standalone mod. In multiplayer, the host's mode temporarily controls the party. FPS Mod on its own keeps its normal F9 behavior.
@@ -62,7 +64,7 @@ If you install TC too, choose a mode in **TC Content** and Save before a run: **
 This build is for **Chained Beasts 1.0.2**, Steam build **26231777**, on 64-bit Windows.
 
 1. Install [BepInEx 6 (IL2CPP x64), build 791](https://builds.bepinex.dev/projects/bepinex_be/791/BepInEx-Unity.IL2CPP-win-x64-6.0.0-be.791%2Bb782da4.zip) if you haven't already. Extract it beside `ChainedBeasts.exe`, start the game once to generate its files, then close it. If you already have a working setup, keep that one.
-2. Download `ChainedBeasts-FirstPerson-0.1.1-experimental.zip` from the [latest release](https://github.com/Krrrrrrk/Chained-Beasts_FPS-Mod/releases/latest).
+2. Download `ChainedBeasts-FirstPerson-0.2.0-experimental.zip` from the [latest release](https://github.com/Krrrrrrk/Chained-Beasts_FPS-Mod/releases/latest).
 3. Close the game and extract the ZIP into your **Chained Beasts** game folder. Merge the included `BepInEx` folder with the one that's already there.
 4. Start the game, enter a Solo arena, and press **F9**.
 

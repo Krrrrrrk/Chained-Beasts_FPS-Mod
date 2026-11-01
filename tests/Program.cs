@@ -12,7 +12,7 @@ static class Program
     static bool Near(float a, float b) => Math.Abs(a - b) < .0001f;
     static void Scenario(string name, Action test)
     { test(); _scenarios++; Console.WriteLine("PASS " + name); }
-    static (FirstPersonController Controller, Player Player, Camera Camera, CinemachineBrain Brain, ManualLogSource Log) Scene(Settings settings = null)
+    static (FirstPersonController Controller, Player Player, Camera Camera, CinemachineBrain Brain, ManualLogSource Log) Scene(Settings settings = null, Func<bool> allowManual = null)
     {
         FirstPersonController.Instance?.Shutdown();
         NativeSafety.ThrowOnAudit = false;
@@ -31,7 +31,7 @@ static class Program
         Camera.main.transform.rotation = new(1, 2, 3, 4);
         var log = new ManualLogSource();
         var controller = new FirstPersonController((IntPtr)99999);
-        controller.Initialize(settings ?? new Settings(), log);
+        controller.Initialize(settings ?? new Settings(), log, allowManual);
         return (controller, player, Camera.main, brain, log);
     }
     static void Toggle(FirstPersonController controller)
@@ -250,7 +250,113 @@ static class Program
             Check(!body.forceRenderingOff && !listedBody.forceRenderingOff, "body restored");
             Check(!body.enabled, "native renderer-enabled changes preserved");
         });
+        Scenario("potion locks first person without changing the manual toggle", () =>
+        {
+            var s = Scene(); var active = true;
+            ForcedViewServices.Register("test:potion", p => active && ReferenceEquals(p, s.Player));
+            try
+            {
+                s.Controller.Update(); s.Controller.LateUpdate();
+                Check(!s.Brain.enabled && s.Controller.Controls(s.Player), "owned potion forces the local view");
+                Toggle(s.Controller); Check(!s.Brain.enabled, "F9 cannot escape active potion");
+                active = false; s.Controller.Update(); Restored(s);
+                s.Controller.Update(); Check(s.Brain.enabled, "expiration does not leave manual first person enabled");
+            }
+            finally { ForcedViewServices.Unregister("test:potion"); }
+        });
+        Scenario("pause and execution suspend rather than consume a potion", () =>
+        {
+            var s = Scene(); var active = true;
+            ForcedViewServices.Register("test:potion", _ => active);
+            try
+            {
+                s.Controller.Update(); NetworkSession.Instance.IsPaused = true; Toggle(s.Controller); Restored(s);
+                NetworkSession.Instance.IsPaused = false; s.Controller.Update(); Check(!s.Brain.enabled, "potion returns after pause");
+                s.Player.IsExecuting = true; s.Controller.Update(); Restored(s);
+                s.Player.IsExecuting = false; s.Controller.Update(); Check(!s.Brain.enabled, "potion returns after execution");
+                active = false; s.Controller.Update(); Restored(s);
+            }
+            finally { ForcedViewServices.Unregister("test:potion"); }
+        });
+        Scenario("potion works independently of disabled manual toggle and restores prior manual choice", () =>
+        {
+            var s = Scene(new Settings { Enabled = false });
+            ForcedViewServices.Register("test:potion", p => ReferenceEquals(p, s.Player));
+            try { s.Controller.Update(); Check(!s.Brain.enabled, "manual config cannot neutralize potion"); Toggle(s.Controller); }
+            finally { ForcedViewServices.Unregister("test:potion"); }
+            s.Controller.Update(); Restored(s); Toggle(s.Controller); Restored(s);
+            s = Scene(new Settings { StartFirstPerson = true });
+            ForcedViewServices.Register("test:potion", _ => true);
+            s.Controller.Update(); Toggle(s.Controller); ForcedViewServices.Unregister("test:potion");
+            s.Controller.Update(); Check(!s.Brain.enabled, "preexisting voluntary first person survives potion expiry");
+            Toggle(s.Controller); Restored(s);
+        });
+        Scenario("force sources are player-specific, removable and fail safely", () =>
+        {
+            var s = Scene(); var foreign = new Player();
+            ForcedViewServices.Register("test:foreign", p => ReferenceEquals(p, foreign));
+            s.Controller.Update(); Restored(s); ForcedViewServices.Unregister("test:foreign");
+            var calls = 0;
+            ForcedViewServices.Register("test:broken", _ => { calls++; throw new InvalidOperationException("fixture"); });
+            s.Controller.Update(); s.Controller.Update();
+            Check(calls == 1 && s.Log.Warnings.Count == 1, "faulty source warned once and ignored"); Restored(s);
+            ForcedViewServices.Unregister("test:broken");
+            ForcedViewServices.Register("test:duplicate", _ => false);
+            var rejected = false; try { ForcedViewServices.Register("test:duplicate", _ => true); } catch(InvalidOperationException) { rejected = true; }
+            Check(rejected, "duplicate source identities rejected"); ForcedViewServices.Unregister("test:duplicate");
+        });
+        Scenario("TC potion-only mode ignores F9 and saved manual preference outside potions", () =>
+        {
+            var s = Scene(new Settings { StartFirstPerson = true }, () => false);
+            Toggle(s.Controller); Restored(s);
+            var active = true;
+            ForcedViewServices.Register("test:tc-only", _ => active);
+            try
+            {
+                s.Controller.Update(); Check(!s.Brain.enabled, "TC-only potion activates embedded view");
+                Toggle(s.Controller); Check(!s.Brain.enabled, "F9 does nothing during the lock");
+                active = false; s.Controller.Update(); Restored(s);
+                Toggle(s.Controller); Restored(s);
+            }
+            finally { ForcedViewServices.Unregister("test:tc-only"); }
+        });
+        Scenario("coexistence mode switches preserve manual preference without two cameras", () =>
+        {
+            var manual = true; var potion = true;
+            var s = Scene(null, () => manual);
+            ForcedViewServices.Register("test:mode", _ => !manual && potion);
+            try
+            {
+                s.Controller.Update(); Restored(s);
+                Toggle(s.Controller); Check(!s.Brain.enabled, "both mods default to voluntary F9");
+                Toggle(s.Controller); Restored(s);
+                manual = false; s.Controller.Update(); Check(!s.Brain.enabled, "potion-only mode forces owned potion");
+                Toggle(s.Controller); Check(!s.Brain.enabled, "potion-only mode ignores F9");
+                potion = false; s.Controller.Update(); Restored(s);
+                manual = true; s.Controller.Update(); Restored(s);
+                Toggle(s.Controller); Check(!s.Brain.enabled, "manual mode can be used again");
+            }
+            finally { ForcedViewServices.Unregister("test:mode"); }
+        });
+        Scenario("explicit TC F9 mode overrides legacy disabled manual settings", () =>
+        {
+            var manual = true;
+            var s = Scene(new Settings { Enabled = false }, () => manual);
+            s.Controller.Update(); Restored(s);
+            Toggle(s.Controller); Check(!s.Brain.enabled, "TC's explicit switching mode enables the toggle even when the old FPS Enabled flag is false");
+            Toggle(s.Controller); Restored(s);
+            manual = false; Toggle(s.Controller); Restored(s);
+            manual = true; Toggle(s.Controller); Check(!s.Brain.enabled, "returning to F9 mode restores switching without restarting the controller");
+        });
+        Scenario("standalone FPS keeps its own disabled toggle behavior", () =>
+        {
+            var s = Scene(new Settings { Enabled = false });
+            Toggle(s.Controller); Restored(s);
+            Toggle(s.Controller); Restored(s);
+            Check(s.Brain.enabled, "absence of a TC policy preserves standalone General.Enabled=false");
+        });
         FirstPersonController.Instance?.Shutdown();
+        Check(!ForcedViewServices.Available, "destroyed controller cannot advertise force support");
         Console.WriteLine($"{_scenarios} simulated scenarios, {_checks} assertions passed. No game/runtime testing performed.");
     }
 }

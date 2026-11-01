@@ -2,6 +2,13 @@
 
 Changes between versions of the mod.
 
+## 0.2.0
+
+- Share camera ownership with TC's Eye Level potion support.
+- Follow the TC choice between potion-only play and manual F9 switching.
+- Preserve standalone preferences when temporary camera requests end.
+- Extend the simulated camera and cleanup checks. Multiplayer still needs testing.
+
 ## 0.1.1
 
 - Keep first person active during pickups, knockdowns, and other temporary player action locks. Native movement, aim, and facing controls stay blocked until the game releases them.

@@ -1,3 +1,9 @@
+#if TC_EMBEDDED_CAMERA
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.IO;
+#endif
 using BepInEx.Logging;
 using Cinemachine;
 using Il2CppInterop.Runtime;
@@ -5,12 +11,18 @@ using Il2CppInterop.Runtime.Attributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+#if TC_EMBEDDED_CAMERA
+namespace TermsAndContusions.FirstPerson;
+#else
 namespace ChainedBeasts.FirstPerson;
+#endif
 
 public sealed class FirstPersonController : MonoBehaviour
 {
     internal static FirstPersonController Instance;
     private Settings _settings;
+    private Func<bool> _allowManual;
+    private bool _manualPolicyProvided;
     private ManualLogSource _log;
     private Player _player;
     private Camera _camera;
@@ -24,14 +36,17 @@ public sealed class FirstPersonController : MonoBehaviour
     private bool _savedVisible;
     private IntPtr _model;
     internal float Yaw => _yaw;
+    internal bool Ready => _initialized && !_failed;
 
     public FirstPersonController(IntPtr pointer) : base(pointer) { }
 
     [HideFromIl2Cpp]
-    internal void Initialize(Settings settings, ManualLogSource log)
+    internal void Initialize(Settings settings, ManualLogSource log, Func<bool> allowManual = null)
     {
         _settings = settings; _log = log;
-        _wanted = settings.StartFirstPerson;
+        _manualPolicyProvided = allowManual != null;
+        _allowManual = allowManual ?? (() => true);
+        _wanted = settings.Enabled && settings.StartFirstPerson;
         _initialized = true;
         Instance = this;
     }
@@ -56,6 +71,18 @@ public sealed class FirstPersonController : MonoBehaviour
         return player;
     }
 
+    // Read outside EligiblePlayer so F9 cannot change the saved manual choice
+    // during a potion's temporary pause/cinematic suspension.
+    private static Player LocalPlayer()
+    {
+        if (!NetworkSession.InstanceExists || !PlayerManager.InstanceExists) return null;
+        var players = PlayerManager.Instance.localPlayers;
+        if (players == null || players.Count != 1) return null;
+        var player = players[0];
+        var id = player?.clientID?.Value;
+        return id != null && NetworkSession.Instance.IsLocalClient(id) ? player : null;
+    }
+
     // Viewing is independent of the native action locks used for pickups and knockdowns.
     internal bool Views(NetworkAgent agent)
     {
@@ -75,16 +102,17 @@ public sealed class FirstPersonController : MonoBehaviour
         if (!_initialized || _failed) return;
         try
         {
+            var forced = ForcedViewServices.For(LocalPlayer());
             if (Application.isFocused && Keyboard.current != null && _settings!.ToggleKey != Key.None &&
                 Keyboard.current[_settings.ToggleKey].wasPressedThisFrame)
-                Toggle();
+                RequestToggle(forced);
 
             var eligible = EligiblePlayer();
             var pad = PairedPad(eligible);
             if (Application.isFocused && _settings!.PadToggle && pad?.rightStickButton.wasPressedThisFrame == true)
-                Toggle();
+                RequestToggle(forced);
 
-            if (!_wanted || eligible == null) { Release(); return; }
+            if ((!(_allowManual() && _wanted) && !forced) || eligible == null) { Release(); return; }
             var camera = Camera.main;
             if (camera == null || !camera.enabled || !camera.gameObject.activeInHierarchy || camera.targetTexture != null ||
                 camera.targetDisplay != 0) { Release(); return; }
@@ -131,6 +159,21 @@ public sealed class FirstPersonController : MonoBehaviour
         _noticeUntil = Time.unscaledTime + 3;
         _log?.LogInfo(_notice);
     }
+
+    private void RequestToggle(bool forced)
+    {
+        if (!_allowManual()) return;
+        if (forced)
+        {
+            _notice = "First person locked until this battle ends";
+            _noticeUntil = Time.unscaledTime + 3;
+        }
+        else if (_manualPolicyProvided || _settings.Enabled) Toggle();
+    }
+
+    [HideFromIl2Cpp]
+    internal void ReportForceFailure(string source, Exception error) =>
+        _log?.LogWarning("First Person force source disabled for this launch: " + source + ": " + error);
 
     private bool Begin(Player player, Camera camera)
     {

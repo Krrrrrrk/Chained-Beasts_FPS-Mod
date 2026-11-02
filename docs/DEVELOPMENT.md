@@ -6,7 +6,7 @@ It's a standalone BepInEx 6 IL2CPP plugin targeting `net6.0`. It borrows the gam
 
 ## What you'll need
 
-- A Windows x64 copy of Chained Beasts 1.0.2, Steam build 26231777.
+- A Windows x64 copy of Chained Beasts 1.0.2, Steam build 26369255.
 - The BepInEx 6 IL2CPP x64 setup linked in the [README](../README.md#installation), with generated assemblies in `BepInEx/interop/`.
 - A .NET SDK that can build `net6.0`. The simulated checks also need a .NET 6 runtime.
 - Python 3 if you want to run the native-entry audit or package the mod.
@@ -89,16 +89,16 @@ Only one local player can own the shared camera. Two or more players on the same
 `src/ChainedBeasts.FirstPerson/NativeSafety.cs` accepts this `GameAssembly.dll` SHA-256:
 
 ```text
-ba3ef02fa87da4c41bb27d7610539c9578132204f0fb5713833e2ef93415ce29
+0deadea3eb9a6ee3bdb69ab7945d4b6dfe40a07be0727edb5cb4dc20c05c3f6e
 ```
 
 The three inspected native entries have these RVAs:
 
 | Method | RVA |
 |---|---|
-| `Player.GetModifiedPlayerInput` | `0x70e530` |
-| `Player.GetMouseGroundPos` | `0x70f1d0` |
-| `NetworkAgent.UpdateModelFacing` | `0x6d2010` |
+| `Player.GetModifiedPlayerInput` | `0x70e540` |
+| `Player.GetMouseGroundPos` | `0x70f1e0` |
+| `NetworkAgent.UpdateModelFacing` | `0x6d2020` |
 
 Startup checks verify the binary hash, expected entry addresses, and patched aliases. Alias checks run again before camera activation and every five seconds while it's active. An unrecognized binary leaves the mod disabled.
 

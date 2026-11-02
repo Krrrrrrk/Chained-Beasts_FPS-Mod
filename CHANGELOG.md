@@ -2,6 +2,11 @@
 
 Changes between versions of the mod.
 
+## 0.2.1
+
+- Update the game fingerprint and movement, aiming and facing hooks for Steam build 26369255.
+- Keep TC camera-mode support. The hotfix still needs an in-game retest.
+
 ## 0.2.0
 
 - Share camera ownership with TC's Eye Level potion support.

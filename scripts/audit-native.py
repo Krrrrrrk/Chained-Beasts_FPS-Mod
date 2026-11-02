@@ -14,7 +14,7 @@ GAME = Path(os.environ.get("CHAINED_BEASTS_GAME_DIR", r"C:\Program Files (x86)\S
 ILSPY = os.environ.get("ILSPY_PATH") or shutil.which("ilspycmd")
 if not ILSPY:
     raise SystemExit("Install ilspycmd or set ILSPY_PATH to its executable before running this audit.")
-EXPECTED_HASH = "ba3ef02fa87da4c41bb27d7610539c9578132204f0fb5713833e2ef93415ce29"
+EXPECTED_HASH = "0deadea3eb9a6ee3bdb69ab7945d4b6dfe40a07be0727edb5cb4dc20c05c3f6e"
 TARGETS = {"Player": ["GetModifiedPlayerInput", "GetMouseGroundPos"],
            "NetworkAgent": ["UpdateModelFacing"]}
 

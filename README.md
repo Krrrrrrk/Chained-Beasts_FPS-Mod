@@ -1,14 +1,16 @@
 # Chained Beasts: FPS Mod
 
+Updated for the Chained Beasts 1.0.2 hotfix, Steam build **26369255**. In-game and multiplayer retesting is still pending.
+
 Ever wanted to make being dragged around by a chain even more disorienting?
 
 FPS Mod adds a first-person camera to **Chained Beasts**. Press **F9** to switch it on, then press it again to go back to the normal third-person view. Move with your usual controls and use the mouse to look around.
 
 **This is a shitpost.** Mouse and keyboard only. It's janky, and I don't plan to fix any issues.
 
-**Current version:** 0.2.0 · **Supported Steam build:** 26231777
+**Current version:** 0.2.1 · **Supported Steam build:** 26369255
 
-**[Download FPS Mod v0.2.0](https://github.com/Krrrrrrk/Chained-Beasts_FPS-Mod/releases/tag/v0.2.0)**
+**[Download FPS Mod v0.2.1](https://github.com/Krrrrrrk/Chained-Beasts_FPS-Mod/releases/tag/v0.2.1)**
 
 ## What does it do?
 
@@ -61,10 +63,10 @@ If you install TC too, choose a mode in **TC Content** and Save before a run: **
 
 ## Installation
 
-This build is for **Chained Beasts 1.0.2**, Steam build **26231777**, on 64-bit Windows.
+This build is for **Chained Beasts 1.0.2**, Steam build **26369255**, on 64-bit Windows.
 
 1. Install [BepInEx 6 (IL2CPP x64), build 791](https://builds.bepinex.dev/projects/bepinex_be/791/BepInEx-Unity.IL2CPP-win-x64-6.0.0-be.791%2Bb782da4.zip) if you haven't already. Extract it beside `ChainedBeasts.exe`, start the game once to generate its files, then close it. If you already have a working setup, keep that one.
-2. Download `ChainedBeasts-FirstPerson-0.2.0-experimental.zip` from the [latest release](https://github.com/Krrrrrrk/Chained-Beasts_FPS-Mod/releases/latest).
+2. Download `ChainedBeasts-FirstPerson-0.2.1-experimental.zip` from the [latest release](https://github.com/Krrrrrrk/Chained-Beasts_FPS-Mod/releases/latest).
 3. Close the game and extract the ZIP into your **Chained Beasts** game folder. Merge the included `BepInEx` folder with the one that's already there.
 4. Start the game, enter a Solo arena, and press **F9**.
 

@@ -5,7 +5,7 @@ import json
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 
 
 def main():
@@ -16,7 +16,7 @@ def main():
     readme = (ROOT / "README.md").read_bytes()
     manifest = {
         "name": "Chained Beasts First Person", "version": VERSION, "channel": "local-experimental",
-        "gameVersion": "1.0.2", "steamBuild": "26231777", "toggle": "F9",
+        "gameVersion": "1.0.2", "steamBuild": "26369255", "toggle": "F9",
         "startsInThirdPerson": True, "gameAssemblySha256": audit["gameAssemblySha256"],
         "dllSha256": sha(data), "readmeSha256": sha(readme), "runtimeVerified": False,
         "multiplayerRuntimeVerified": False, "installedByPackaging": False,

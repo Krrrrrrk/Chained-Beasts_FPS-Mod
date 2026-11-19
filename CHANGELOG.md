@@ -2,6 +2,11 @@
 
 Changes between versions of the mod.
 
+## 0.2.2
+
+- Update the game fingerprint and input hooks for Chained Beasts 1.0.3 / Steam build 26775394.
+- Rebuild against the new generated game bindings.
+
 ## 0.2.1
 
 - Update the game fingerprint and movement, aiming and facing hooks for Steam build 26369255.

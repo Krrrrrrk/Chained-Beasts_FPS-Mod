@@ -1,6 +1,6 @@
 # Chained Beasts: FPS Mod
 
-Updated for **Chained Beasts 1.0.3, Steam build 26775394**. Built against fresh game bindings; the game was not launched for this update.
+I've given this a surface-level test on **Chained Beasts 1.0.3 (Steam build 26775394)**, and the basic features appear to be working. I haven't checked every mechanic or edge case.
 
 Ever wanted to make being dragged around by a chain even more disorienting?
 
@@ -90,7 +90,7 @@ You can change the toggle key, mouse sensitivity, field of view, head/body visib
 
 ## Multiplayer
 
-Multiplayer is untested, and I have no plans to test it. If you try it, you're on your own.
+The surface-level check doesn't establish full multiplayer compatibility. If you try it, you're on your own.
 
 Two or more players on the same PC keep the normal shared camera. There's no split-screen first-person mode.
 
@@ -99,7 +99,7 @@ Two or more players on the same PC keep the normal shared camera. There's no spl
 - Weapons still use the game's original animations. They can look odd or clip into the view.
 - There's no camera wall-collision avoidance yet. Leaning, bending, and knockdowns can still feel rough.
 - Unusual equipment outside the recognized attachments may disappear with your body. You can turn body hiding off if you'd rather see it.
-- The pickup, knockdown, and body-hiding changes in 0.1.1 haven't had a full in-game retest. Unusual injuries that force movement in a particular world direction haven't been fully tested either.
+- Unusual injuries that force movement in a particular world direction, and edge cases around pickups, knockdowns and body hiding, haven't been fully checked.
 
 I don't plan to fix these or any other issues. The source is here if you want to change something yourself.
 
